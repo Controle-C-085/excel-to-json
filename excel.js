@@ -15,10 +15,10 @@ const exFormated1 = {
   problem: 'problem',
   url: '',
   options: {
-    a: 'optionA',
-    b: 'optionB',
-    c: 'optionC',
-    d: 'optionD',
+    a: 'a',
+    b: 'b',
+    c: 'c',
+    d: 'd',
   },
   rightAnswer: 'rightAnswer',
   topico: 'topico',
@@ -26,16 +26,20 @@ const exFormated1 = {
 
 
 function formatedJson(exFormated, oldData) {
-  let data = exFormated;
+  const data = exFormated;
+  const subData = {};
   Object.keys(exFormated).forEach((item) => {
     const currentItem = exFormated[item];
     if (typeof currentItem === "object") {
-      let subData = currentItem;
-
       Object.keys(currentItem).forEach((item2) => {
-        currentItem[item2] = oldData[item2];
+        console.log('currentItem' , item2);
+        // subData = {
+        //   ...subData,
+        //   [item2]: currentItem[item2],
+        // }
       });
-      data[item] = subData;
+      console.log('[subData]', subData);
+      data.options = subData;
     } else {
       data[item] = oldData[item];
     }
@@ -66,9 +70,22 @@ document.getElementById('button').addEventListener("click", () => {
               [headerExcel[item]]: newItem,
             }
           });
-          const currentFormattingForJson = formatedJson(exFormated1, data);
-          return { ...currentFormattingForJson };
-        });
+          const newData = {
+            id: data.id,
+            problem: data.problem,
+            url: data.url,
+            options: {
+              a: data.a,
+              b: data.b,
+              c: data.c,
+              d: data.d,
+            },
+            rightAnswer: data.rightAnswer,
+            topico: data.topico,
+          }
+          // const currentFormattingForJson = formatedJson(exFormated1, data);
+          return { ...newData };
+        }); 
         const jsonFormated = JSON.stringify(rowObjectNew, undefined, 4);
         const revomedAspas = jsonFormated.replace(/"/g, `'`);
 

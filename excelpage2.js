@@ -69,8 +69,21 @@ document.getElementById('button').addEventListener("click", () => {
               }
             };
           });
-          const currentFormattingForJson = formatedJson(exFormated1, data);
-          return { ...currentFormattingForJson };
+          const newData = {
+            id: data.id,
+            problem: data.problem,
+            url: data.url,
+            options: {
+              a: data.a,
+              b: data.b,
+              c: data.c,
+              d: data.d,
+            },
+            rightAnswer: data.rightAnswer,
+            topico: data.topico,
+          }
+          // const currentFormattingForJson = formatedJson(exFormated1, data);
+          return { ...newData };
         });
         const jsonFormated = JSON.stringify(rowObjectNew, undefined, 4);
         const revomedAspas = jsonFormated.replace(/"/g, `'`);
